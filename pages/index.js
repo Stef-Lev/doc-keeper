@@ -1,65 +1,45 @@
-import Link from 'next/link'
-import dbConnect from '../lib/dbConnect'
-import Pet from '../models/Pet'
+import Link from "next/link";
+import dbConnect from "../lib/dbConnect";
+import { Box, Text } from "@chakra-ui/react";
 
-const Index = ({ pets }) => (
-  <>
-    {/* Create a card for each pet */}
-    {pets.map((pet) => (
-      <div key={pet._id}>
-        <div className="card">
-          <img src={pet.image_url} />
-          <h5 className="pet-name">{pet.name}</h5>
-          <div className="main-content">
-            <p className="pet-name">{pet.name}</p>
-            <p className="owner">Owner: {pet.owner_name}</p>
-
-            {/* Extra Pet Info: Likes and Dislikes */}
-            <div className="likes info">
-              <p className="label">Likes</p>
-              <ul>
-                {pet.likes.map((data, index) => (
-                  <li key={index}>{data} </li>
-                ))}
-              </ul>
-            </div>
-            <div className="dislikes info">
-              <p className="label">Dislikes</p>
-              <ul>
-                {pet.dislikes.map((data, index) => (
-                  <li key={index}>{data} </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="btn-container">
-              <Link href="/[id]/edit" as={`/${pet._id}/edit`} legacyBehavior>
-                <button className="btn edit">Edit</button>
-              </Link>
-              <Link href="/[id]" as={`/${pet._id}`} legacyBehavior>
-                <button className="btn view">View</button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    ))}
-  </>
-)
+const Index = ({ docs }) => {
+  console.log(docs);
+  return (
+    <Box>
+      <Text as="p">STEFANOS</Text>
+      {docs.map((item, idx) => (
+        <Box key={idx + 1}>{item}</Box>
+      ))}
+    </Box>
+  );
+};
 
 /* Retrieves pet(s) data from mongodb database */
+// export async function getServerSideProps() {
+//   await dbConnect();
+
+//   /* find all the data in our database */
+//   const result = await Pet.find({});
+//   const pets = result.map((doc) => {
+//     const pet = doc.toObject();
+//     pet._id = pet._id.toString();
+//     return pet;
+//   });
+
+//   return { props: { docs: pets } };
+// }
+
 export async function getServerSideProps() {
-  await dbConnect()
+  await dbConnect();
+  const data = await import("../database.json");
+  const json = JSON.parse(JSON.stringify(data));
+  const docs = json.documents.map(
+    (item) =>
+      item.content.blocks.filter((item) => item.type === "header-one")[0].text
+  );
+  console.log(docs);
 
-  /* find all the data in our database */
-  const result = await Pet.find({})
-  const pets = result.map((doc) => {
-    const pet = doc.toObject()
-    pet._id = pet._id.toString()
-    return pet
-  })
-
-  return { props: { pets: pets } }
+  return { props: { docs } };
 }
 
-export default Index
+export default Index;
