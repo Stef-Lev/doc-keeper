@@ -1,6 +1,7 @@
 import Head from "next/head";
-import Link from "next/link";
-import { ChakraProvider } from "@chakra-ui/react";
+import "../public/globalStyles.css";
+import theme from "../theme";
+import { ChakraProvider, Container } from "@chakra-ui/react";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -8,8 +9,10 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <title>Doc Keeper</title>
       </Head>
-      <ChakraProvider>
-        <Component {...pageProps} />
+      <ChakraProvider theme={theme}>
+        <Container maxW="4xl" color="white">
+          <Component {...pageProps} />
+        </Container>
       </ChakraProvider>
     </>
   );
