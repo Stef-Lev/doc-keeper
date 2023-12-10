@@ -1,6 +1,7 @@
 import Head from "next/head";
 import "../public/globalStyles.css";
 import theme from "../theme";
+import Footer from "../components/Footer";
 import { ChakraProvider, Container } from "@chakra-ui/react";
 
 function MyApp({ Component, pageProps }) {
@@ -13,6 +14,7 @@ function MyApp({ Component, pageProps }) {
         <Container maxW="4xl" color="white">
           <Component {...pageProps} />
         </Container>
+        <Footer />
       </ChakraProvider>
     </>
   );
