@@ -7,7 +7,8 @@ function DocItem({ item }) {
   const router = useRouter();
   return (
     <Box
-      border="1px solid white"
+      bg="#2f3143"
+      borderRadius="8px"
       p={{ base: "16px", md: "18px" }}
       mb={{ base: "10px", md: "14px" }}
       _hover={{ cursor: "pointer" }}

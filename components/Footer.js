@@ -1,5 +1,16 @@
 import { Box } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import useFooterContent from "../hooks/useFooterContent";
+import {
+  IoHomeOutline,
+  IoAddCircleOutline,
+  IoSettingsOutline,
+} from "react-icons/io5";
+
 const Footer = () => {
+  const router = useRouter();
+  console.log(router);
+  const footerContent = useFooterContent(router.route);
   return (
     <Box
       position="fixed"
@@ -11,17 +22,15 @@ const Footer = () => {
     >
       <Box
         borderRadius="16px"
-        backgroundColor="red.200"
-        border="2px solid white"
+        backgroundColor="#c24c5a"
+        color="white"
         display="flex"
         justifyContent="center"
         alignItems="center"
-        gap="20px"
-        w={{ base: "92%", sm: "80%", md: "600px", lg: "738px" }}
+        gap={{ base: "16px", sm: "20px", md: "32px" }}
+        w={{ base: "92%", sm: "380px", md: "460px" }}
       >
-        <Box>HOME</Box>
-        <Box>ADD</Box>
-        <Box>USER</Box>
+        {footerContent}
       </Box>
     </Box>
   );
