@@ -2,14 +2,18 @@ import Link from "next/link";
 import dbConnect from "../lib/dbConnect";
 import { Box } from "@chakra-ui/react";
 import DocItem from "../components/DocItem";
+import SearchBar from "../components/SearchBar";
 
 const Index = ({ docs }) => {
   console.log(docs);
   return (
     <Box>
-      {docs.map((item, idx) => (
-        <DocItem key={idx + 1} item={item} />
-      ))}
+      <SearchBar />
+      <Box>
+        {docs.map((item, idx) => (
+          <DocItem key={idx + 1} item={item} />
+        ))}
+      </Box>
     </Box>
   );
 };
