@@ -65,7 +65,7 @@ const useFooterContent = () => {
   return (
     <>
       {footers[route].map((item) => (
-        <Link href={item.href}>
+        <Link href={item.href} key={`page_${item.href}_icon`}>
           <Box
             display="flex"
             justifyContent="center"
