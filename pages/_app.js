@@ -4,6 +4,9 @@ import theme from "../theme";
 import Footer from "../components/Footer";
 import { ChakraProvider, Container } from "@chakra-ui/react";
 
+// add long-press functionality for favorites (added library)
+// add authentication
+
 function MyApp({ Component, pageProps }) {
   return (
     <>

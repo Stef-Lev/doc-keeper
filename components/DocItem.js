@@ -2,9 +2,16 @@ import React from "react";
 import { useRouter } from "next/router";
 import { Box, Heading, Text } from "@chakra-ui/react";
 import { format } from "date-fns";
+import { useLongPress } from "use-long-press";
 
 function DocItem({ item }) {
   const router = useRouter();
+  const bind = useLongPress(
+    () => {
+      alert("Long pressed!");
+    },
+    { threshold: 1000 }
+  );
   return (
     <Box
       bg="#2f3143"
@@ -13,6 +20,7 @@ function DocItem({ item }) {
       mb={{ base: "10px", md: "14px" }}
       _hover={{ cursor: "pointer" }}
       onClick={() => router.push(`/document/${item.id}`)}
+      {...bind()}
     >
       <Heading as="h3" fontSize={{ base: "16px", md: "20px" }} mb="8px">
         {item.title}
