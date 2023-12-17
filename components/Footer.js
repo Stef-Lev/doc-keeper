@@ -1,16 +1,8 @@
 import { Box } from "@chakra-ui/react";
-import { useRouter } from "next/router";
 import useFooterContent from "../hooks/useFooterContent";
-import {
-  IoHomeOutline,
-  IoAddCircleOutline,
-  IoSettingsOutline,
-} from "react-icons/io5";
 
 const Footer = () => {
-  const router = useRouter();
-  console.log(router);
-  const footerContent = useFooterContent(router.route);
+  const footerContent = useFooterContent();
   return (
     <Box
       position="fixed"
