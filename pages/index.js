@@ -26,6 +26,7 @@ const Index = ({ docs }) => {
     }
   };
   console.log(query);
+  console.log(process.env.MONGODB_URI);
 
   return (
     <Box>
@@ -39,21 +40,21 @@ const Index = ({ docs }) => {
   );
 };
 
-export async function getServerSideProps() {
-  await dbConnect();
-  const data = await import("../database.json");
-  const json = JSON.parse(JSON.stringify(data));
-  const docs = json.documents.map((item) => {
-    return {
-      title: item.content.blocks.filter((item) => item.type === "header-one")[0]
-        .text,
-      id: item.id,
-      date: item.createdAt,
-    };
-  });
-  console.log(docs);
+// export async function getServerSideProps() {
+//   await dbConnect();
+//   const data = await import("../database.json");
+//   const json = JSON.parse(JSON.stringify(data));
+//   const docs = json.documents.map((item) => {
+//     return {
+//       title: item.content.blocks.filter((item) => item.type === "header-one")[0]
+//         .text,
+//       id: item.id,
+//       date: item.createdAt,
+//     };
+//   });
+//   console.log(docs);
 
-  return { props: { docs } };
-}
+//   return { props: { docs } };
+// }
 
 export default Index;

@@ -1,75 +1,46 @@
-import { useState } from 'react'
-import { useRouter } from 'next/router'
-import Link from 'next/link'
-import dbConnect from '../../lib/dbConnect'
-import Pet from '../../models/Pet'
+import { useState } from "react";
+import { useRouter } from "next/router";
+import dbConnect from "../../lib/dbConnect";
+import Doc from "../../models/Pet";
 
-/* Allows you to view pet card info and delete pet card*/
-const PetPage = ({ pet }) => {
-  const router = useRouter()
-  const [message, setMessage] = useState('')
-  const handleDelete = async () => {
-    const petID = router.query.id
+const DocViewPage = () => {
+  const router = useRouter();
+  console.log(router.route);
 
-    try {
-      await fetch(`/api/pets/${petID}`, {
-        method: 'Delete',
-      })
-      router.push('/')
-    } catch (error) {
-      setMessage('Failed to delete the pet.')
-    }
-  }
+  return <div>THIS IS THE DOC VIEW</div>;
+};
 
-  return (
-    <div key={pet._id}>
-      <div className="card">
-        <img src={pet.image_url} />
-        <h5 className="pet-name">{pet.name}</h5>
-        <div className="main-content">
-          <p className="pet-name">{pet.name}</p>
-          <p className="owner">Owner: {pet.owner_name}</p>
+export default DocViewPage;
 
-          {/* Extra Pet Info: Likes and Dislikes */}
-          <div className="likes info">
-            <p className="label">Likes</p>
-            <ul>
-              {pet.likes.map((data, index) => (
-                <li key={index}>{data} </li>
-              ))}
-            </ul>
-          </div>
-          <div className="dislikes info">
-            <p className="label">Dislikes</p>
-            <ul>
-              {pet.dislikes.map((data, index) => (
-                <li key={index}>{data} </li>
-              ))}
-            </ul>
-          </div>
+export async function getServerSideProps(context) {
+  console.log(context, context.query);
+  // const { patchId } = context.query;
 
-          <div className="btn-container">
-            <Link href="/[id]/edit" as={`/${pet._id}/edit`} legacyBehavior>
-              <button className="btn edit">Edit</button>
-            </Link>
-            <button className="btn delete" onClick={handleDelete}>
-              Delete
-            </button>
-          </div>
-        </div>
-      </div>
-      {message && <p>{message}</p>}
-    </div>
-  )
+  // try {
+  //   let patch = {};
+
+  //   const { req } = context;
+  //   const baseUrl = req.headers.host;
+  //   const protocol = req.headers["x-forwarded-proto"] || "http";
+  //   const apiUrl = `${protocol}://${baseUrl}/api/patches/${patchId}`;
+
+  //   const fetchedData = await getOneMethod(apiUrl);
+
+  //   if (fetchedData) {
+  //     patch = fetchedData;
+  //   }
+
+  //   return {
+  //     props: {
+  //       patch,
+  //     },
+  //   };
+  // } catch (error) {
+  //   console.log(error);
+  // }
+  return {
+    props: {
+      name: "STEFANOS",
+    },
+  };
 }
-
-export async function getServerSideProps({ params }) {
-  await dbConnect()
-
-  const pet = await Pet.findById(params.id).lean()
-  pet._id = pet._id.toString()
-
-  return { props: { pet } }
-}
-
-export default PetPage

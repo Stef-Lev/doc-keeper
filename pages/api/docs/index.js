@@ -4,7 +4,7 @@ import Doc from "../../../models/Doc";
 export default async function handler(req, res) {
   const { method } = req;
 
-  await dbConnect();
+  //   await dbConnect();
 
   switch (method) {
     case "GET":

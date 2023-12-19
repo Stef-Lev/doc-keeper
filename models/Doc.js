@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import { Schema, model, models } from "mongoose";
 
-const DocSchema = new mongoose.Schema(
+const DocSchema = new Schema(
   {
     content: { type: Schema.Types.Mixed, required: true },
   },
@@ -9,4 +9,5 @@ const DocSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.models.Doc || mongoose.model("Doc", DocSchema);
+const Doc = models.Doc || model("Doc", DocSchema);
+export default Doc;
