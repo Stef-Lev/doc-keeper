@@ -1,22 +1,31 @@
 import { useState } from "react";
-import dbConnect from "../lib/dbConnect";
+import Loader from "@/components/Loader";
 import { Box } from "@chakra-ui/react";
-import DocItem from "../components/DocItem";
-import SearchBar from "../components/SearchBar";
+import DocItem from "@/components/DocItem";
+import SearchBar from "@/components/SearchBar";
 import Fuse from "fuse.js";
+import { useQuery } from "@tanstack/react-query";
+import { getAllDocs } from "@/helpers/apiServices";
 
-const Index = ({ docs }) => {
-  console.log(docs);
+const Index = () => {
   const [query, setQuery] = useState("");
+  const { isPending, error, data, fetching } = useQuery({
+    queryKey: ["allDocs"],
+    queryFn: () => getAllDocs("/api/docs").then((res) => res.data),
+  });
+
+  if (isPending) {
+    return <Loader fullScreen />;
+  }
   const searchOptions = {
     includeScore: true,
     keys: ["content.blocks.text"],
   };
-  const fuse = new Fuse(docs, searchOptions);
+  const fuse = new Fuse(data, searchOptions);
   const results = fuse.search(query);
   const searchResults = query
     ? results.filter((doc) => doc.score < 0.5).map((doc) => doc.item)
-    : docs;
+    : data;
 
   const handleSearchInputChange = (event) => {
     if (event) {
@@ -25,8 +34,6 @@ const Index = ({ docs }) => {
       setQuery("");
     }
   };
-  console.log(query);
-  console.log(process.env.MONGODB_URI);
 
   return (
     <Box>
@@ -39,22 +46,5 @@ const Index = ({ docs }) => {
     </Box>
   );
 };
-
-// export async function getServerSideProps() {
-//   await dbConnect();
-//   const data = await import("../database.json");
-//   const json = JSON.parse(JSON.stringify(data));
-//   const docs = json.documents.map((item) => {
-//     return {
-//       title: item.content.blocks.filter((item) => item.type === "header-one")[0]
-//         .text,
-//       id: item.id,
-//       date: item.createdAt,
-//     };
-//   });
-//   console.log(docs);
-
-//   return { props: { docs } };
-// }
 
 export default Index;

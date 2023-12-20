@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import dbConnect from "../../lib/dbConnect";
+// import dbConnect from "../../lib/dbConnect";
 // import Doc from "../../models/Doc";
 
 const DocViewPage = () => {
@@ -13,36 +13,36 @@ const DocViewPage = () => {
 
 export default DocViewPage;
 
-export async function getServerSideProps(context) {
-  await dbConnect();
-  console.log(context.query);
-  // const { patchId } = context.query;
+// export async function getServerSideProps(context) {
+//   await dbConnect();
+//   console.log(context.query);
+//   const { id } = context.query;
 
-  // try {
-  //   let patch = {};
+//   // try {
+//   //   let patch = {};
 
-  //   const { req } = context;
-  //   const baseUrl = req.headers.host;
-  //   const protocol = req.headers["x-forwarded-proto"] || "http";
-  //   const apiUrl = `${protocol}://${baseUrl}/api/patches/${patchId}`;
+//   //   const { req } = context;
+//   //   const baseUrl = req.headers.host;
+//   //   const protocol = req.headers["x-forwarded-proto"] || "http";
+//   //   const apiUrl = `${protocol}://${baseUrl}/api/patches/${patchId}`;
 
-  //   const fetchedData = await getOneMethod(apiUrl);
+//   //   const fetchedData = await getOneMethod(apiUrl);
 
-  //   if (fetchedData) {
-  //     patch = fetchedData;
-  //   }
+//   //   if (fetchedData) {
+//   //     patch = fetchedData;
+//   //   }
 
-  //   return {
-  //     props: {
-  //       patch,
-  //     },
-  //   };
-  // } catch (error) {
-  //   console.log(error);
-  // }
-  return {
-    props: {
-      name: "STEFANOS",
-    },
-  };
-}
+//   //   return {
+//   //     props: {
+//   //       patch,
+//   //     },
+//   //   };
+//   // } catch (error) {
+//   //   console.log(error);
+//   // }
+//   return {
+//     props: {
+//       name: "STEFANOS",
+//     },
+//   };
+// }
