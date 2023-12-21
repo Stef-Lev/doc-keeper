@@ -1,4 +1,12 @@
-/* body {
-  background-color: rgb(32, 33, 48);
-  color: white;
-} */
+.rdw-editor-main {
+  text-align: center;
+}
+.rdw-editor-main h1 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 22px;
+}
+.rdw-image-imagewrapper {
+  display: flex;
+  justify-content: center;
+}
