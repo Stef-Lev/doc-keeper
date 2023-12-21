@@ -3,9 +3,13 @@ import { useQuery } from "@tanstack/react-query";
 import { getDoc } from "@/helpers/apiServices";
 import Loader from "@/components/Loader";
 import { Box } from "@chakra-ui/react";
-import { Editor } from "react-draft-wysiwyg";
+import dynamic from "next/dynamic";
+// import { Editor } from "react-draft-wysiwyg";
 import { convertFromRaw, EditorState } from "draft-js";
-
+const Editor = dynamic(
+  () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
+  { ssr: false }
+);
 const DocViewPage = () => {
   const router = useRouter();
   const { id } = router.query;
