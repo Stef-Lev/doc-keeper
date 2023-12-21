@@ -7,10 +7,10 @@ export default async function handler(req, res) {
     method,
   } = req;
 
-  //   await dbConnect();
+  await dbConnect();
 
   switch (method) {
-    case "GET" /* Get a model by its ID */:
+    case "GET":
       try {
         const doc = await Doc.findById(id);
         if (!doc) {
@@ -22,7 +22,7 @@ export default async function handler(req, res) {
       }
       break;
 
-    case "PUT" /* Edit a model by its ID */:
+    case "PUT":
       try {
         const doc = await Doc.findByIdAndUpdate(id, req.body, {
           new: true,
@@ -37,7 +37,7 @@ export default async function handler(req, res) {
       }
       break;
 
-    case "DELETE" /* Delete a model by its ID */:
+    case "DELETE":
       try {
         const deletedDoc = await Doc.deleteOne({ _id: id });
         if (!deletedDoc) {

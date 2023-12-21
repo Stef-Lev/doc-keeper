@@ -25,7 +25,7 @@ function MyApp({ Component, pageProps }) {
           <Container maxW="4xl" color="white">
             <Component {...pageProps} />
           </Container>
-          <Footer />
+          {/* <Footer /> */}
         </ChakraProvider>
       </QueryClientProvider>
     </>
