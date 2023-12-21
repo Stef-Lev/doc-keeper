@@ -60,6 +60,28 @@ const useFooterContent = () => {
         href: "/settings",
       },
     ],
+    "/settings": [
+      {
+        icon: <BiHome size={32} />,
+        iconActive: <BiSolidHome size={32} />,
+        href: "/",
+      },
+      {
+        icon: <BiEdit size={32} />,
+        iconActive: <BiSolidEdit size={32} />,
+        href: "/edit",
+      },
+      {
+        icon: <MdDeleteOutline size={32} />,
+        iconActive: <MdDeleteOutline size={32} />,
+        href: "/delete",
+      },
+      {
+        icon: <IoSettingsOutline size={32} />,
+        iconActive: <IoSettings size={32} />,
+        href: "/settings",
+      },
+    ],
   };
 
   return (
