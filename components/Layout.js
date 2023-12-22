@@ -2,6 +2,7 @@ import Head from "next/head";
 import Footer from "./Footer";
 import { Container } from "@chakra-ui/react";
 import ScrollTopButton from "./ScrollTopButton";
+import PageHeader from "./PageHeader";
 
 const Layout = ({ children }) => {
   return (
