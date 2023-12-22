@@ -14,8 +14,8 @@ const Footer = () => {
     >
       <Box
         borderRadius="16px"
-        backgroundColor="#c24c5a"
-        color="white"
+        backgroundColor="basic.primary"
+        color="basic.white"
         display="flex"
         justifyContent="center"
         alignItems="center"

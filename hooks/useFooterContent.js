@@ -86,18 +86,20 @@ const useFooterContent = () => {
 
   return (
     <>
-      {footers[route].map((item) => (
-        <Link href={item.href} key={`page_${item.href}_icon`}>
-          <Box
-            display="flex"
-            justifyContent="center"
-            p="10px"
-            borderRadius="8px"
-          >
-            {item.href === route ? item.iconActive : item.icon}
-          </Box>
-        </Link>
-      ))}
+      {footers[route]
+        ? footers[route].map((item) => (
+            <Link href={item.href} key={`page_${item.href}_icon`}>
+              <Box
+                display="flex"
+                justifyContent="center"
+                p="10px"
+                borderRadius="8px"
+              >
+                {item.href === route ? item.iconActive : item.icon}
+              </Box>
+            </Link>
+          ))
+        : null}
     </>
   );
 };

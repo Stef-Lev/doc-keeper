@@ -45,10 +45,10 @@ const ScrollTopButton = () => {
               w="60px"
               h="60px"
               borderRadius="16px"
-              background="#90EE90"
-              color="white"
-              _active={{ background: "#90EE90" }}
-              _hover={{ background: "#90EE90" }}
+              background="basic.secondaryDark"
+              color="basic.white"
+              _active={{ background: "basic.secondaryDark" }}
+              _hover={{ background: "basic.secondaryDark" }}
               opacity={opacity}
               onClick={handleScrollTop}
             >
