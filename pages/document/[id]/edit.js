@@ -10,6 +10,7 @@ const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
   { ssr: false }
 );
+import notify from "@/helpers/notify";
 import { Box } from "@chakra-ui/react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
@@ -19,12 +20,27 @@ const EditPage = () => {
   console.log(id);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [dirty, setDirty] = useState(false);
-  const { isPending, error, data, fetching } = useQuery({
+  const { isLoading, error, data, isFetching } = useQuery({
     queryKey: [`docEdit_${id}`],
-    queryFn: () => getDoc("/api/docs/", id).then((res) => res.data),
+    queryFn: () =>
+      getDoc("/api/docs/", id)
+        .then((res) => res.data)
+        .catch((err) => {
+          throw err;
+        }),
     enabled: !!id,
+    retry: false,
     staleTime: Infinity,
   });
+
+  if (error) {
+    notify("Something went wrong", "error");
+    return null;
+  }
+
+  if (isLoading || isFetching || !data) {
+    return <Loader fullScreen />;
+  }
 
   const handleChange = (newEditorState) => {
     const currentContent = editorState.getCurrentContent();
@@ -44,10 +60,6 @@ const EditPage = () => {
       );
     }
   }, [data]);
-
-  if (isPending) {
-    return <Loader fullScreen />;
-  }
 
   console.log({ editorState });
   return (

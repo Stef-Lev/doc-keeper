@@ -5,18 +5,31 @@ import DocItem from "@/components/DocItem";
 import SearchBar from "@/components/SearchBar";
 import Fuse from "fuse.js";
 import { useQuery } from "@tanstack/react-query";
+import notify from "@/helpers/notify";
 import { getAllDocs } from "@/helpers/apiServices";
 
 const Index = () => {
   const [query, setQuery] = useState("");
-  const { isPending, error, data, fetching } = useQuery({
+  const { isFetching, error, data, isLoading } = useQuery({
     queryKey: ["allDocs"],
-    queryFn: () => getAllDocs("/api/docs").then((res) => res.data),
+    queryFn: () =>
+      getAllDocs("/api/docs")
+        .then((res) => res.data)
+        .catch((err) => {
+          throw err;
+        }),
+    retry: false,
   });
 
-  if (isPending) {
+  if (error) {
+    notify("Something went wrong", "error");
+    return;
+  }
+
+  if (isLoading || isFetching) {
     return <Loader fullScreen />;
   }
+
   const searchOptions = {
     includeScore: true,
     keys: ["content.blocks.text"],
