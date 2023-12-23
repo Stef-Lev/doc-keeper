@@ -5,7 +5,6 @@ import Loader from "@/components/Loader";
 import { Box } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import PageHeader from "@/components/PageHeader";
-// import { Editor } from "react-draft-wysiwyg";
 import { convertFromRaw, EditorState } from "draft-js";
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -16,12 +15,12 @@ const DocViewPage = () => {
   const { id } = router.query;
   console.log(router.route, id);
   const { isPending, error, data, fetching } = useQuery({
-    queryKey: ["docView"],
+    queryKey: [`docView_${id}`],
     queryFn: () => getDoc("/api/docs/", id).then((res) => res.data),
     enabled: !!id,
   });
 
-  if (isPending) {
+  if (isPending || fetching) {
     return <Loader fullScreen />;
   }
   console.log({ data });

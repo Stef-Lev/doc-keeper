@@ -15,7 +15,7 @@ const PageHeader = () => {
       mt="16px"
       borderRadius="8px"
     >
-      <Box onClick={router.back}>
+      <Box onClick={router.back} cursor="pointer">
         <FaChevronLeft size="28" />
       </Box>
     </Box>

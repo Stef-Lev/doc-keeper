@@ -11,6 +11,7 @@ const Footer = () => {
       bottom="5"
       w="100%"
       h="56px"
+      zIndex={10}
     >
       <Box
         borderRadius="16px"
