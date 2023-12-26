@@ -28,7 +28,7 @@ function DocItem({ item }) {
         {getTitle(item)}
       </Heading>
       <Text fontSize={{ base: "12px", md: "14px" }} fontStyle="italic">
-        {format(new Date(item.createdAt), "PPP")}
+        {format(new Date(item.createdAt), "ccc,  dd/mm/yyyy")}
       </Text>
     </Box>
   );

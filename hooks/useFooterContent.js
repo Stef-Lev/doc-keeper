@@ -14,7 +14,12 @@ import { Box } from "@chakra-ui/react";
 import { BiSolidHome, BiHome } from "react-icons/bi";
 
 const useFooterContent = () => {
-  const { route, asPath } = useRouter();
+  const {
+    route,
+    asPath,
+    query: { id },
+  } = useRouter();
+  console.log(useRouter());
   const footers = {
     "/": [
       {
@@ -47,7 +52,7 @@ const useFooterContent = () => {
       {
         icon: <BiEdit size={32} />,
         iconActive: <BiSolidEdit size={32} />,
-        href: "/edit",
+        href: `/document/${id}/edit`,
       },
       {
         icon: <MdDeleteOutline size={32} />,
@@ -61,6 +66,28 @@ const useFooterContent = () => {
       },
     ],
     "/settings": [
+      {
+        icon: <BiHome size={32} />,
+        iconActive: <BiSolidHome size={32} />,
+        href: "/",
+      },
+      {
+        icon: <BiEdit size={32} />,
+        iconActive: <BiSolidEdit size={32} />,
+        href: "/document/[id]/edit",
+      },
+      {
+        icon: <MdDeleteOutline size={32} />,
+        iconActive: <MdDeleteOutline size={32} />,
+        href: "/delete",
+      },
+      {
+        icon: <IoSettingsOutline size={32} />,
+        iconActive: <IoSettings size={32} />,
+        href: "/settings",
+      },
+    ],
+    "/document/[id]/edit": [
       {
         icon: <BiHome size={32} />,
         iconActive: <BiSolidHome size={32} />,
@@ -83,6 +110,8 @@ const useFooterContent = () => {
       },
     ],
   };
+
+  console.log(Object.keys(footers));
 
   return (
     <>

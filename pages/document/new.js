@@ -1,8 +1,8 @@
 import dynamic from "next/dynamic";
+import PageHeader from "@/components/PageHeader";
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader";
-import PageHeader from "@/components/PageHeader";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { getDoc } from "@/helpers/apiServices";
 import { useState, useEffect } from "react";
 import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
@@ -14,40 +14,10 @@ import notify from "@/helpers/notify";
 import { Box } from "@chakra-ui/react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
-const EditPage = () => {
+const newDocPage = () => {
   const router = useRouter();
-  const { id } = router.query;
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [dirty, setDirty] = useState(false);
-  const { isLoading, error, data, isFetching } = useQuery({
-    queryKey: [`docEdit_${id}`],
-    queryFn: () =>
-      getDoc("/api/docs/", id)
-        .then((res) => res.data)
-        .catch((err) => {
-          throw err;
-        }),
-    enabled: !!id,
-    retry: false,
-    staleTime: Infinity,
-  });
-
-  useEffect(() => {
-    if (data) {
-      setEditorState(
-        EditorState.createWithContent(convertFromRaw(data.content))
-      );
-    }
-  }, [data]);
-
-  if (error) {
-    notify("Something went wrong", "error");
-    return null;
-  }
-
-  if (isLoading || isFetching || !data) {
-    return <Loader fullScreen />;
-  }
 
   const handleChange = (newEditorState) => {
     const currentContent = editorState.getCurrentContent();
@@ -81,4 +51,4 @@ const EditPage = () => {
   );
 };
 
-export default EditPage;
+export default newDocPage;
