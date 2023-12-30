@@ -20,9 +20,6 @@ const newDocPage = () => {
   const [dirty, setDirty] = useState(false);
 
   const handleChange = (newEditorState) => {
-    const currentContent = editorState.getCurrentContent();
-    const newContent = newEditorState.getCurrentContent();
-
     setEditorState(newEditorState);
     setDirty(true);
   };

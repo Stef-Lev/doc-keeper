@@ -1,10 +1,14 @@
 import dynamic from "next/dynamic";
+import { useFooter } from "context/FooterContext";
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader";
 import PageHeader from "@/components/PageHeader";
 import { useQuery } from "@tanstack/react-query";
+import { useDisclosure } from "@chakra-ui/react";
 import { getDoc } from "@/helpers/apiServices";
 import { useState, useEffect } from "react";
+import { useNavigationObserver } from "hooks/useNavigationObserver";
+import AlertModal from "@/components/AlertModal";
 import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -17,8 +21,23 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 const EditPage = () => {
   const router = useRouter();
   const { id } = router.query;
+
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [dirty, setDirty] = useState(false);
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigationObserver({
+    shouldStopNavigation: dirty,
+    onNavigate: () => onOpen(),
+  });
+
+  const handleSaveClick = () => {
+    // Your save logic here
+    console.log("Save clicked!");
+  };
+
+  updateCallback("save", handleSaveClick);
+
   const { isLoading, error, data, isFetching } = useQuery({
     queryKey: [`docEdit_${id}`],
     queryFn: () =>
@@ -50,9 +69,6 @@ const EditPage = () => {
   }
 
   const handleChange = (newEditorState) => {
-    const currentContent = editorState.getCurrentContent();
-    const newContent = newEditorState.getCurrentContent();
-
     setEditorState(newEditorState);
     setDirty(true);
   };
@@ -77,6 +93,12 @@ const EditPage = () => {
           onEditorStateChange={handleChange}
         />
       </Box>
+      <AlertModal
+        type="leave"
+        onClose={onClose}
+        isOpen={isOpen}
+        callBackAction={navigate}
+      />
     </Box>
   );
 };
