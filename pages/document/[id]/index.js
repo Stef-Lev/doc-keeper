@@ -1,11 +1,12 @@
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
-import { getDoc } from "@/helpers/apiServices";
+import { getOne } from "@/helpers/apiServices";
 import Loader from "@/components/Loader";
 import { Box } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import notify from "@/helpers/notify";
 import PageHeader from "@/components/PageHeader";
+import HeaderButton from "@/components/HeaderButton";
 import { convertFromRaw, EditorState } from "draft-js";
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -18,7 +19,7 @@ const DocViewPage = () => {
   const { isLoading, error, data, isFetching } = useQuery({
     queryKey: [`docView_${id}`],
     queryFn: () =>
-      getDoc("/api/docs/", id)
+      getOne("/api/docs/", id)
         .then((res) => res.data)
         .catch((err) => {
           throw err;
@@ -38,7 +39,15 @@ const DocViewPage = () => {
   }
   return (
     <Box>
-      <PageHeader />
+      <PageHeader
+        buttons={[
+          <HeaderButton
+            text="Edit"
+            type="edit"
+            onClick={() => router.push(`/document/${id}/edit`)}
+          />,
+        ]}
+      />
       <Box
         textAlign="center"
         margin="16px auto"

@@ -1,14 +1,15 @@
 import dynamic from "next/dynamic";
-import { useFooter } from "context/FooterContext";
+import HeaderButton from "@/components/HeaderButton";
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader";
 import PageHeader from "@/components/PageHeader";
 import { useQuery } from "@tanstack/react-query";
 import { useDisclosure } from "@chakra-ui/react";
-import { getDoc } from "@/helpers/apiServices";
+import { getOne } from "@/helpers/apiServices";
 import { useState, useEffect } from "react";
 import { useNavigationObserver } from "hooks/useNavigationObserver";
 import AlertModal from "@/components/AlertModal";
+import { useAddDoc } from "@/helpers/mutations";
 import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -21,6 +22,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 const EditPage = () => {
   const router = useRouter();
   const { id } = router.query;
+  const { addDoc } = useAddDoc();
 
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [dirty, setDirty] = useState(false);
@@ -31,17 +33,10 @@ const EditPage = () => {
     onNavigate: () => onOpen(),
   });
 
-  const handleSaveClick = () => {
-    // Your save logic here
-    console.log("Save clicked!");
-  };
-
-  updateCallback("save", handleSaveClick);
-
   const { isLoading, error, data, isFetching } = useQuery({
     queryKey: [`docEdit_${id}`],
     queryFn: () =>
-      getDoc("/api/docs/", id)
+      getOne("/api/docs/", id)
         .then((res) => res.data)
         .catch((err) => {
           throw err;
@@ -73,9 +68,28 @@ const EditPage = () => {
     setDirty(true);
   };
 
+  const handleCreateDocument = async () => {
+    const contentState = editorState.getCurrentContent();
+    const raw = convertToRaw(contentState);
+    if (!raw.blocks.map((it) => it.type).includes("header-one")) {
+      notify("Please add a title to the document (H1)", "error");
+    } else {
+      await addDoc({ content: raw, createdAt: new Date() });
+      console.log({ content: raw, createdAt: new Date() });
+    }
+  };
+
   return (
     <Box>
-      <PageHeader />
+      <PageHeader
+        buttons={[
+          <HeaderButton
+            text="Save"
+            type="save"
+            onClick={() => handleCreateDocument()}
+          />,
+        ]}
+      />
       <Box
         textAlign="center"
         margin="16px auto"

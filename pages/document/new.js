@@ -3,7 +3,7 @@ import PageHeader from "@/components/PageHeader";
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader";
 import { useMutation } from "@tanstack/react-query";
-import { getDoc } from "@/helpers/apiServices";
+import { getOne } from "@/helpers/apiServices";
 import { useState, useEffect } from "react";
 import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 const Editor = dynamic(

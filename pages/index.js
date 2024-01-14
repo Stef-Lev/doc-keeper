@@ -6,14 +6,14 @@ import SearchBar from "@/components/SearchBar";
 import Fuse from "fuse.js";
 import { useQuery } from "@tanstack/react-query";
 import notify from "@/helpers/notify";
-import { getAllDocs } from "@/helpers/apiServices";
+import { getAll } from "@/helpers/apiServices";
 
 const Index = () => {
   const [query, setQuery] = useState("");
   const { isFetching, error, data, isLoading } = useQuery({
     queryKey: ["allDocs"],
     queryFn: () =>
-      getAllDocs("/api/docs")
+      getAll("/api/docs")
         .then((res) => res.data)
         .catch((err) => {
           throw err;
