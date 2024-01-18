@@ -9,7 +9,7 @@ import { getOne } from "@/helpers/apiServices";
 import { useState, useEffect } from "react";
 import { useNavigationObserver } from "hooks/useNavigationObserver";
 import AlertModal from "@/components/AlertModal";
-import { useAddDoc } from "@/helpers/mutations";
+import { useUpdateDoc } from "@/helpers/mutations";
 import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -22,7 +22,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 const EditPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { addDoc } = useAddDoc();
+  const { updateDoc } = useUpdateDoc();
 
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [dirty, setDirty] = useState(false);
@@ -64,21 +64,21 @@ const EditPage = () => {
   }
 
   const handleChange = (newEditorState) => {
-    setEditorState(newEditorState);
     setDirty(true);
+    setEditorState(newEditorState);
   };
 
-  const handleCreateDocument = async () => {
+  const handlePatchDocument = async () => {
     const contentState = editorState.getCurrentContent();
     const raw = convertToRaw(contentState);
     if (!raw.blocks.map((it) => it.type).includes("header-one")) {
       notify("Please add a title to the document (H1)", "error");
     } else {
-      await addDoc({ content: raw, createdAt: new Date() });
-      console.log({ content: raw, createdAt: new Date() });
+      setDirty(false);
+      await updateDoc(id, { content: raw, createdAt: new Date() });
     }
   };
-
+  console.log(editorState);
   return (
     <Box>
       <PageHeader
@@ -86,7 +86,7 @@ const EditPage = () => {
           <HeaderButton
             text="Save"
             type="save"
-            onClick={() => handleCreateDocument()}
+            onClick={() => handlePatchDocument()}
           />,
         ]}
       />

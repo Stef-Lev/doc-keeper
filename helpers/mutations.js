@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { postOne, deleteOne } from "./apiServices";
+import { postOne, deleteOne, updateOne } from "./apiServices";
 import { useRouter } from "next/router";
 import notify from "./notify";
 
@@ -20,6 +20,27 @@ export const useAddDoc = () => {
 
   return {
     addDoc,
+    isLoading,
+  };
+};
+
+export const useUpdateDoc = () => {
+  const router = useRouter();
+  const { mutate: updateDoc, isLoading } = useMutation(
+    (id, data) => updateOne("/api/docs/", id, data),
+    {
+      onSuccess: () => {
+        notify("Document updated", "success");
+        router.push("/");
+      },
+      onError: (error) => {
+        notify("Error: " + error.message, "error");
+      },
+    }
+  );
+
+  return {
+    updateDoc,
     isLoading,
   };
 };
