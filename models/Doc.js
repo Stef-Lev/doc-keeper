@@ -1,11 +1,22 @@
 import { Schema, model, models } from "mongoose";
 
+const ContentSchema = new Schema(
+  {
+    blocks: { type: Schema.Types.Mixed, required: true },
+    entityMap: { type: Schema.Types.Array, required: true },
+  },
+  {
+    minimize: false,
+  }
+);
+
 const DocSchema = new Schema(
   {
-    content: { type: Schema.Types.Mixed, required: true },
+    content: { type: ContentSchema, required: true },
   },
   {
     timestamps: true,
+    minimize: false,
   }
 );
 
