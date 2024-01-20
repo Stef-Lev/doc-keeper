@@ -43,7 +43,7 @@ const DocViewPage = () => {
   if (isLoading || isFetching || !data) {
     return <Loader fullScreen />;
   }
-  console.log("DATA:CONTENT", data);
+
   return (
     <Box>
       <PageHeader

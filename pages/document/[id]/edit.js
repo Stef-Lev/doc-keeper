@@ -75,10 +75,10 @@ const EditPage = () => {
       notify("Please add a title to the document (H1)", "error");
     } else {
       setDirty(false);
-      await updateDoc(id, { content: raw, createdAt: new Date() });
+      console.log(updateDoc);
+      await updateDoc({ id, body: { content: raw } });
     }
   };
-  console.log(editorState);
   return (
     <Box>
       <PageHeader

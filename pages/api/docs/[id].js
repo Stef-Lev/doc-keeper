@@ -24,6 +24,7 @@ export default async function handler(req, res) {
 
     case "PUT":
       try {
+        console.log(req.body);
         const doc = await Doc.findByIdAndUpdate(id, req.body, {
           new: true,
           runValidators: true,

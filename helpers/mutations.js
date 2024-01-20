@@ -27,7 +27,11 @@ export const useAddDoc = () => {
 export const useUpdateDoc = () => {
   const router = useRouter();
   const { mutate: updateDoc, isLoading } = useMutation(
-    (id, data) => updateOne("/api/docs/", id, data),
+    (data) => {
+      const { id, body } = data;
+      console.log(id, body);
+      updateOne("/api/docs/", id, body);
+    },
     {
       onSuccess: () => {
         notify("Document updated", "success");
