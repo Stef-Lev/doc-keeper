@@ -3,7 +3,7 @@ import HeaderButton from "@/components/HeaderButton";
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader";
 import PageHeader from "@/components/PageHeader";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useDisclosure } from "@chakra-ui/react";
 import { getOne } from "@/helpers/apiServices";
 import { useState, useEffect } from "react";
@@ -23,6 +23,7 @@ const EditPage = () => {
   const router = useRouter();
   const { id } = router.query;
   const { updateDoc } = useUpdateDoc();
+  const queryClient = useQueryClient();
 
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [dirty, setDirty] = useState(false);

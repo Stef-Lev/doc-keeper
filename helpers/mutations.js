@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postOne, deleteOne, updateOne } from "./apiServices";
 import { useRouter } from "next/router";
 import notify from "./notify";
@@ -26,15 +26,16 @@ export const useAddDoc = () => {
 
 export const useUpdateDoc = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { mutate: updateDoc, isLoading } = useMutation(
-    (data) => {
-      const { id, body } = data;
-      console.log(id, body);
+    (variables) => {
+      const { id, body } = variables;
       updateOne("/api/docs/", id, body);
     },
     {
-      onSuccess: () => {
+      onSuccess: async () => {
         notify("Document updated", "success");
+        await queryClient.invalidateQueries("allDocs");
         router.push("/");
       },
       onError: (error) => {
