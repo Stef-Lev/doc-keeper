@@ -19,7 +19,7 @@ const useFooterContent = () => {
     pathname,
     query: { id },
   } = useRouter();
-  console.log(pathname);
+
   const footerIcons = {
     home: {
       icon: <BiHome size={32} />,

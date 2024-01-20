@@ -75,7 +75,6 @@ const EditPage = () => {
       notify("Please add a title to the document (H1)", "error");
     } else {
       setDirty(false);
-      console.log(updateDoc);
       await updateDoc({ id, body: { content: raw } });
     }
   };
