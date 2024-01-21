@@ -33,15 +33,13 @@ export const useUpdateDoc = () => {
       updateOne("/api/docs/", id, body);
     },
     {
-      onSuccess: () => {
+      onSuccess: async () => {
         notify("Document updated", "success");
-        queryClient.invalidateQueries("allDocs");
+        await queryClient.invalidateQueries("allDocs");
+        await router.push("/");
       },
       onError: (error) => {
         notify("Error: " + error.message, "error");
-      },
-      onSettled: () => {
-        router.push("/");
       },
     }
   );
