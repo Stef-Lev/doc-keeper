@@ -5,7 +5,7 @@ import { useNavigationObserver } from "hooks/useNavigationObserver";
 import AlertModal from "@/components/AlertModal";
 import { useState } from "react";
 import { useDisclosure } from "@chakra-ui/react";
-import { useAddDoc } from "@/helpers/mutations";
+import { useAddDoc } from "@/helpers/apiMutations";
 import { EditorState, convertToRaw } from "draft-js";
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),

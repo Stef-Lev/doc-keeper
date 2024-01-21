@@ -10,8 +10,8 @@ const PageHeader = ({ buttons }) => {
     }
     return (
       <Box display="flex" gap={buttons.length > 1 ? 2 : 0}>
-        {buttons.map((item) => (
-          <Box>{item}</Box>
+        {buttons.map((item, index) => (
+          <Box key={`button__${index + 1}`}>{item}</Box>
         ))}
       </Box>
     );

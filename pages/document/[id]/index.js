@@ -1,13 +1,12 @@
 import { useRouter } from "next/router";
-import { useQuery } from "@tanstack/react-query";
-import { getOne } from "@/helpers/apiServices";
 import Loader from "@/components/Loader";
 import { Box } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import notify from "@/helpers/notify";
 import PageHeader from "@/components/PageHeader";
 import HeaderButton from "@/components/HeaderButton";
-import { useDeleteDoc } from "@/helpers/mutations";
+import { useDeleteDoc } from "@/helpers/apiMutations";
+import { useGetDocPreview } from "@/helpers/apiQueries";
 import { convertFromRaw, EditorState } from "draft-js";
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -18,18 +17,7 @@ const DocViewPage = () => {
   const { id } = router.query;
   const { deleteDoc } = useDeleteDoc();
 
-  const { isLoading, error, data, isFetching } = useQuery({
-    queryKey: [`docView_${id}`],
-    queryFn: () =>
-      getOne("/api/docs/", id)
-        .then((res) => res.data)
-        .catch((err) => {
-          throw err;
-        }),
-    enabled: !!id,
-    retry: false,
-    staleTime: Infinity,
-  });
+  const { isLoading, error, data, isFetching } = useGetDocPreview(id);
 
   const handleDeleteClick = async () => {
     await deleteDoc(id);

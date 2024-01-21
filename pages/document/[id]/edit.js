@@ -3,13 +3,12 @@ import HeaderButton from "@/components/HeaderButton";
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader";
 import PageHeader from "@/components/PageHeader";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useGetEditableDoc } from "@/helpers/apiQueries";
 import { useDisclosure } from "@chakra-ui/react";
-import { getOne } from "@/helpers/apiServices";
 import { useState, useEffect } from "react";
 import { useNavigationObserver } from "hooks/useNavigationObserver";
 import AlertModal from "@/components/AlertModal";
-import { useUpdateDoc } from "@/helpers/mutations";
+import { useUpdateDoc } from "@/helpers/apiMutations";
 import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -33,18 +32,7 @@ const EditPage = () => {
     onNavigate: () => onOpen(),
   });
 
-  const { isLoading, error, data, isFetching } = useQuery({
-    queryKey: [`docEdit_${id}`],
-    queryFn: () =>
-      getOne("/api/docs/", id)
-        .then((res) => res.data)
-        .catch((err) => {
-          throw err;
-        }),
-    enabled: !!id,
-    retry: false,
-    staleTime: Infinity,
-  });
+  const { isLoading, error, data, isFetching } = useGetEditableDoc(id);
 
   useEffect(() => {
     if (data) {
