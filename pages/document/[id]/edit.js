@@ -22,8 +22,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 const EditPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { updateDoc } = useUpdateDoc();
-  const queryClient = useQueryClient();
+  const { updateDoc, isLoading: isEditLoading } = useUpdateDoc();
 
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [dirty, setDirty] = useState(false);
@@ -60,7 +59,7 @@ const EditPage = () => {
     return null;
   }
 
-  if (isLoading || isFetching || !data) {
+  if (isLoading || isFetching || !data || isEditLoading) {
     return <Loader fullScreen />;
   }
 
