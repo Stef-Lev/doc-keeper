@@ -14,6 +14,8 @@ function DocItem({ item }) {
     { threshold: 1000 }
   );
 
+  console.log(new Date(item.createdAt));
+
   return (
     <Box
       bg="#2f3143"
@@ -28,7 +30,7 @@ function DocItem({ item }) {
         {getTitle(item)}
       </Heading>
       <Text fontSize={{ base: "12px", md: "14px" }} fontStyle="italic">
-        {format(new Date(item.createdAt), "ccc,  dd/mm/yyyy")}
+        {format(new Date(item.createdAt), "ccc,  dd/MM/yyyy")}
       </Text>
     </Box>
   );

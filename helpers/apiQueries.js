@@ -12,6 +12,7 @@ export const useGetAllDocs = () => {
           throw err;
         }),
     retry: false,
+    staleTime: 2000,
   });
 };
 
@@ -27,7 +28,7 @@ export const useGetDocPreview = (id) => {
         }),
     enabled: !!id,
     retry: false,
-    staleTime: Infinity,
+    staleTime: 2000,
   });
   return { isLoading, error, data, isFetching };
 };
@@ -43,6 +44,6 @@ export const useGetEditableDoc = (id) => {
         }),
     enabled: !!id,
     retry: false,
-    staleTime: Infinity,
+    staleTime: 2000,
   });
 };

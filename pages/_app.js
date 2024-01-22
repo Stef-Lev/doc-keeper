@@ -9,7 +9,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 // add long-press functionality for favorites (added library)
 // add authentication
 // add warning on delete
-// fix caching
 
 const queryClient = new QueryClient();
 

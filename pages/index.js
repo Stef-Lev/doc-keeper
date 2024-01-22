@@ -37,6 +37,7 @@ const Index = () => {
       setQuery("");
     }
   };
+  console.log(data);
 
   return (
     <Box>
