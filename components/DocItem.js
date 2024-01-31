@@ -1,4 +1,3 @@
-import React from "react";
 import { useRouter } from "next/router";
 import { Box, Heading, Text } from "@chakra-ui/react";
 import { format } from "date-fns";

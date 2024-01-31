@@ -2,7 +2,7 @@ import { Button as ChakraButton } from "@chakra-ui/react";
 
 const Button = ({ buttonType, ...props }) => {
   const buttonTypes = {
-    primary: "brand.100",
+    primary: "basic.secondaryDark",
     transparent: "whiteAlpha.200",
     disabled: "gray.400",
     success: "green.300",

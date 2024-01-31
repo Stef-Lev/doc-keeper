@@ -1,5 +1,6 @@
 import "../public/globalStyles.css";
 import theme from "../theme";
+import { SessionProvider } from "next-auth/react";
 import Layout from "@/components/Layout";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -12,14 +13,16 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, session, ...pageProps }) {
   return (
     <>
       <QueryClientProvider client={queryClient}>
         <ChakraProvider theme={theme}>
           <Layout>
-            <Component {...pageProps} />
-            <ToastContainer limit={3} />
+            <SessionProvider session={session}>
+              <Component {...pageProps} />
+              <ToastContainer limit={3} />
+            </SessionProvider>
           </Layout>
         </ChakraProvider>
       </QueryClientProvider>

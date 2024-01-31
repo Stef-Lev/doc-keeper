@@ -1,9 +1,12 @@
 import Head from "next/head";
 import Footer from "./Footer";
+import { useRouter } from "next/router";
 import { Container } from "@chakra-ui/react";
 import ScrollTopButton from "./ScrollTopButton";
 
 const Layout = ({ children }) => {
+  const { route } = useRouter();
+  const isAuthPage = ["/register", "/login"].includes(route);
   return (
     <>
       <Head>
@@ -16,7 +19,7 @@ const Layout = ({ children }) => {
         {children}
         <ScrollTopButton />
       </Container>
-      <Footer />
+      {!isAuthPage && <Footer />}
     </>
   );
 };
