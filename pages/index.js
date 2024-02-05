@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { signOut } from "next-auth/react";
 import Loader from "@/components/Loader";
 import { Box } from "@chakra-ui/react";
 import DocItem from "@/components/DocItem";
@@ -7,7 +8,7 @@ import Fuse from "fuse.js";
 import notify from "@/helpers/notify";
 import { useGetAllDocs } from "@/helpers/apiQueries";
 
-const Index = () => {
+const HomePage = () => {
   const [query, setQuery] = useState("");
   const { isFetching, error, data, isLoading } = useGetAllDocs();
 
@@ -47,8 +48,9 @@ const Index = () => {
           <DocItem key={idx + 1} item={item} />
         ))}
       </Box>
+      <button onClick={() => signOut()}>LOGOUT</button>
     </Box>
   );
 };
 
-export default Index;
+export default HomePage;

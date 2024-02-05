@@ -1,7 +1,10 @@
 import { Box, Heading, Input, Text } from "@chakra-ui/react";
 import Button from "@/components/Button";
 import { useState } from "react";
+import { useRegisterUser } from "@/helpers/apiMutations";
+
 const RegisterPage = () => {
+  const { registerUser } = useRegisterUser();
   const [loginData, setLoginData] = useState({
     username: "",
     password: "",
@@ -13,11 +16,13 @@ const RegisterPage = () => {
     setLoginData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (password !== confirmPassword) {
       setError("Passwords do not match");
     }
+    await registerUser(loginData);
   };
+
   console.log(loginData);
   return (
     <Box

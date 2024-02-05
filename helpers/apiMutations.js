@@ -70,3 +70,24 @@ export const useDeleteDoc = () => {
     isLoading,
   };
 };
+
+export const useRegisterUser = () => {
+  const router = useRouter();
+  const { mutate: registerUser, isLoading } = useMutation(
+    (data) => postOne("/api/auth/register", data),
+    {
+      onSuccess: () => {
+        notify("Successfully added", "success");
+        router.push("/");
+      },
+      onError: (error) => {
+        notify("Error: " + error.message, "error");
+      },
+    }
+  );
+
+  return {
+    registerUser,
+    isLoading,
+  };
+};

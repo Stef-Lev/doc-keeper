@@ -13,8 +13,6 @@ function DocItem({ item }) {
     { threshold: 1000 }
   );
 
-  console.log(new Date(item.createdAt));
-
   return (
     <Box
       bg="#2f3143"

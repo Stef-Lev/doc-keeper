@@ -9,12 +9,12 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { username, password, passwordCheck } = req.body;
-    if (!username || !password || !passwordCheck) {
+    const { username, password, confirmPassword } = req.body;
+    if (!username || !password || !confirmPassword) {
       return res.status(400).json({ message: "Please fill in all fields." });
     }
 
-    if (password !== passwordCheck) {
+    if (password !== confirmPassword) {
       return res.status(400).json({ message: "Passwords do not match." });
     }
 
