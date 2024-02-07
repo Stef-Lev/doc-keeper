@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Loader from "@/components/Loader";
 import { Box } from "@chakra-ui/react";
 import DocItem from "@/components/DocItem";
@@ -11,6 +11,9 @@ import { useGetAllDocs } from "@/helpers/apiQueries";
 const HomePage = () => {
   const [query, setQuery] = useState("");
   const { isFetching, error, data, isLoading } = useGetAllDocs();
+  const { data: session, status } = useSession();
+
+  console.log({ session });
 
   if (error) {
     notify("Something went wrong", "error");

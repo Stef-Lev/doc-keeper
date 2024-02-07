@@ -13,6 +13,7 @@ const ContentSchema = new Schema(
 const DocSchema = new Schema(
   {
     content: { type: ContentSchema, required: true },
+    user: { type: Schema.Types.ObjectId, ref: "User" },
   },
   {
     timestamps: true,
