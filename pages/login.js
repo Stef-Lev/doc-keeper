@@ -2,8 +2,11 @@ import { Box, Heading, Input, Text } from "@chakra-ui/react";
 import { signIn } from "next-auth/react";
 import Button from "@/components/Button";
 import { useState } from "react";
+import { useRouter } from "next/router";
+import notify from "@/helpers/notify";
 
 const LoginPage = () => {
+  const router = useRouter();
   const [loginData, setLoginData] = useState({
     username: "",
     password: "",
@@ -14,13 +17,17 @@ const LoginPage = () => {
     setLoginData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    await signIn("credentials", {
+    signIn("credentials", {
       redirect: false,
       username: loginData.username,
       password: loginData.password,
-    });
+    })
+      .then(() => router.push("/"))
+      .catch((err) => {
+        notify("Error: " + err, "error");
+      });
   };
 
   return (
@@ -71,6 +78,27 @@ const LoginPage = () => {
             Submit
           </Button>
         </Box>
+        {router.query.new_account ? (
+          <Box marginTop="10px" fontSize="13px" opacity="0.7">
+            <Text>
+              Your account has been created, please login with your credentials
+            </Text>
+          </Box>
+        ) : (
+          <Box marginTop="10px" fontSize="13px" opacity="0.7">
+            <Text>
+              Don't have an account yet?{" "}
+              <Text
+                as="span"
+                color="basic.secondaryLight"
+                cursor="pointer"
+                onClick={() => router.push("/register")}
+              >
+                Register
+              </Text>
+            </Text>
+          </Box>
+        )}
       </Box>
     </Box>
   );

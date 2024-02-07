@@ -41,7 +41,7 @@ export const postOne = (url, body) => {
       return response.json();
     })
     .catch((error) => {
-      console.error("Error posting document:", error);
+      console.error("Error posting", error);
       throw error;
     });
 };

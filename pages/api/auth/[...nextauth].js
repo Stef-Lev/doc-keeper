@@ -18,11 +18,18 @@ export const authOptions = {
             username,
           }).select("+password");
 
-          if (!user || user.password !== password) {
-            (await dbConnect()).closeConnection();
+          if (!user) {
             throw new Error("No user found");
           }
-          // console.log({ id: user.id, user: user.username });
+
+          const correctPassword = await user.correctPassword(
+            password,
+            user.password
+          );
+          if (!correctPassword) {
+            throw new Error("Invalid password");
+          }
+
           return { id: user.id, name: user.username };
         } catch (error) {
           throw new Error("Authentication failed");
@@ -31,14 +38,11 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      console.log("from jwt", { token, user });
+    async jwt({ token }) {
       return token;
     },
     async session({ session, token }) {
       session.user.id = token?.id;
-
-      // console.log({ session });
       return Promise.resolve(session);
     },
   },

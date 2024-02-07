@@ -1,10 +1,12 @@
 import { Box, Heading, Input, Text } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import Button from "@/components/Button";
 import { useState } from "react";
 import { useRegisterUser } from "@/helpers/apiMutations";
 
 const RegisterPage = () => {
   const { registerUser } = useRegisterUser();
+  const router = useRouter();
   const [loginData, setLoginData] = useState({
     username: "",
     password: "",
@@ -16,11 +18,12 @@ const RegisterPage = () => {
     setLoginData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
-  const handleSubmit = async () => {
-    if (password !== confirmPassword) {
+  const handleSubmit = () => {
+    if (loginData.password !== loginData.confirmPassword) {
       setError("Passwords do not match");
     }
-    await registerUser(loginData);
+    registerUser(loginData);
+    router.push("/login?new_account=true");
   };
 
   console.log(loginData);
@@ -81,6 +84,19 @@ const RegisterPage = () => {
           <Button buttonType="primary" onClick={handleSubmit}>
             Submit
           </Button>
+        </Box>
+        <Box marginTop="10px" fontSize="13px" opacity="0.7">
+          <Text>
+            Do you already have an account?{" "}
+            <Text
+              as="span"
+              color="basic.secondaryLight"
+              cursor="pointer"
+              onClick={() => router.push("/login")}
+            >
+              Login
+            </Text>
+          </Text>
         </Box>
       </Box>
     </Box>
