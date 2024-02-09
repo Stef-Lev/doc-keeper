@@ -10,10 +10,11 @@ import { useGetAllDocs } from "@/helpers/apiQueries";
 
 const HomePage = () => {
   const [query, setQuery] = useState("");
-  const { isFetching, error, data, isLoading } = useGetAllDocs();
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
-  console.log({ session });
+  const { isFetching, error, data, isLoading } = useGetAllDocs(
+    session?.user?.id
+  );
 
   if (error) {
     notify("Something went wrong", "error");

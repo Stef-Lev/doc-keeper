@@ -3,10 +3,10 @@ import { postOne, deleteOne, updateOne } from "./apiServices";
 import { useRouter } from "next/router";
 import notify from "./notify";
 
-export const useAddDoc = () => {
+export const useAddDoc = (userId) => {
   const router = useRouter();
   const { mutate: addDoc, isLoading } = useMutation(
-    (data) => postOne("/api/docs/", data),
+    (data) => postOne(`/api/docs?user=${userId}`, data),
     {
       onSuccess: () => {
         notify("Successfully added", "success");

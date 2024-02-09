@@ -1,9 +1,10 @@
 import dbConnect from "../../../lib/dbConnect";
 import Doc from "../../../models/Doc";
+import User from "models/User";
 
 export default async function handler(req, res) {
   const {
-    query: { id },
+    query: { id, user: userID },
     method,
   } = req;
 
@@ -12,13 +13,27 @@ export default async function handler(req, res) {
   switch (method) {
     case "GET":
       try {
-        const doc = await Doc.findById(id);
-        if (!doc) {
-          return res.status(400).json({ success: false });
+        // Check if the user exists
+        const user = await User.findById(userID);
+        if (!user) {
+          return res
+            .status(404)
+            .json({ success: false, message: "User not found" });
         }
+        // Check if the document exists for the user
+        const doc = await Doc.findOne({ _id: id, user: userID });
+        if (!doc) {
+          return res
+            .status(404)
+            .json({ success: false, message: "Document not found" });
+        }
+        // Return the document
         res.status(200).json({ success: true, data: doc });
       } catch (error) {
-        res.status(400).json({ success: false });
+        console.error(error);
+        res
+          .status(500)
+          .json({ success: false, message: "Internal server error" });
       }
       break;
 

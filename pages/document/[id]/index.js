@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader";
+import { useSession } from "next-auth/react";
 import { Box } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import notify from "@/helpers/notify";
@@ -15,9 +16,12 @@ const Editor = dynamic(
 const DocViewPage = () => {
   const router = useRouter();
   const { id } = router.query;
+  const { data: session } = useSession();
   const { deleteDoc } = useDeleteDoc();
-
-  const { isLoading, error, data, isFetching } = useGetDocPreview(id);
+  const { isLoading, error, data, isFetching } = useGetDocPreview(
+    id,
+    session?.user?.id
+  );
 
   const handleDeleteClick = async () => {
     await deleteDoc(id);

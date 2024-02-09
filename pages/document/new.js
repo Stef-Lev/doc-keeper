@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 import PageHeader from "@/components/PageHeader";
 import HeaderButton from "@/components/HeaderButton";
+import { useSession } from "next-auth/react";
 import { useNavigationObserver } from "hooks/useNavigationObserver";
 import AlertModal from "@/components/AlertModal";
 import { useState } from "react";
@@ -16,7 +17,8 @@ import { Box } from "@chakra-ui/react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 const newDocPage = () => {
-  const { addDoc } = useAddDoc();
+  const { data: session } = useSession();
+  const { addDoc } = useAddDoc(session?.user?.id);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [dirty, setDirty] = useState(false);
 

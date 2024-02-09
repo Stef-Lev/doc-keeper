@@ -1,5 +1,5 @@
-export const getOne = (url, id) => {
-  return fetch(url + id)
+export const getOne = (url) => {
+  return fetch(url)
     .then((res) => {
       if (!res.ok) {
         throw new Error(`HTTP error! Status: ${res.status}`);
