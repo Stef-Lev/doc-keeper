@@ -17,7 +17,7 @@ const DocViewPage = () => {
   const router = useRouter();
   const { id } = router.query;
   const { data: session } = useSession();
-  const { deleteDoc } = useDeleteDoc();
+  const { deleteDoc } = useDeleteDoc(session?.user?.id);
   const { isLoading, error, data, isFetching } = useGetDocPreview(
     id,
     session?.user?.id

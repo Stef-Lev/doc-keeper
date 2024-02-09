@@ -66,8 +66,8 @@ export const updateOne = (url, id, body) => {
     });
 };
 
-export const deleteOne = (url, id) => {
-  return fetch(url + id, {
+export const deleteOne = (url) => {
+  return fetch(url, {
     method: "DELETE",
   })
     .then((res) => {

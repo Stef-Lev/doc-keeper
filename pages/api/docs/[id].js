@@ -58,6 +58,13 @@ export default async function handler(req, res) {
         if (!deletedDoc) {
           return res.status(400).json({ success: false });
         }
+
+        await User.findByIdAndUpdate(
+          userID,
+          { $pull: { documents: id } },
+          { new: true }
+        ).exec();
+
         res.status(200).json({ success: true, data: {} });
       } catch (error) {
         res.status(400).json({ success: false });

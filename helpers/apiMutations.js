@@ -50,10 +50,10 @@ export const useUpdateDoc = () => {
   };
 };
 
-export const useDeleteDoc = () => {
+export const useDeleteDoc = (userId) => {
   const router = useRouter();
   const { mutate: deleteDoc, isLoading } = useMutation(
-    (id) => deleteOne("/api/docs/", id),
+    (id) => deleteOne(`/api/docs/${id}?user=${userId}`),
     {
       onSuccess: () => {
         notify("Document deleted", "success");
