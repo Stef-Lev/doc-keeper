@@ -1,21 +1,25 @@
 import { Box } from "@chakra-ui/react";
 import { FaChevronLeft } from "react-icons/fa";
 import { useRouter } from "next/router";
+import { useMemo } from "react";
 
 const PageHeader = ({ buttons }) => {
   const router = useRouter();
-  const renderButtons = () => {
-    if (!buttons) {
-      return;
+  const renderButtons = useMemo(() => {
+    if (!buttons || buttons.length === 0) {
+      return null;
     }
     return (
       <Box display="flex" gap={buttons.length > 1 ? 2 : 0}>
         {buttons.map((item, index) => (
-          <Box key={`button__${index + 1}`}>{item}</Box>
+          <Box key={`button__${index}`} mr={2}>
+            {item}
+          </Box>
         ))}
       </Box>
     );
-  };
+  }, [buttons]);
+
   return (
     <Box
       display="flex"
@@ -30,7 +34,7 @@ const PageHeader = ({ buttons }) => {
       <Box onClick={router.back} cursor="pointer">
         <FaChevronLeft size="28" />
       </Box>
-      {renderButtons()}
+      {renderButtons}
     </Box>
   );
 };

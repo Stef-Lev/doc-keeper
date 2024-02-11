@@ -19,6 +19,7 @@ const SearchBar = ({ onChange, query }) => {
           onChange={onChange}
         />
         <InputRightElement
+          cursor="pointer"
           children={<IoClose size={20} />}
           onClick={() => onChange()}
         />

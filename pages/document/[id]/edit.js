@@ -71,6 +71,7 @@ const EditPage = () => {
       await updateDoc({ id, body: { content: raw } });
     }
   };
+
   return (
     <Box>
       <PageHeader
@@ -82,23 +83,25 @@ const EditPage = () => {
           />,
         ]}
       />
-      <Box
-        textAlign="center"
-        margin="16px auto"
-        background="#fff"
-        padding="10px"
-        marginBottom="120px"
-        color="#000"
-        borderRadius="10px"
-      >
-        <Editor
-          editorState={editorState}
-          toolbarClassName="rich-toolbar"
-          wrapperClassName="rich-wrapper"
-          editorClassName="rich-editor"
-          onEditorStateChange={handleChange}
-        />
-      </Box>
+      {editorState && (
+        <Box
+          textAlign="center"
+          margin="16px auto"
+          background="#fff"
+          padding="10px"
+          marginBottom="120px"
+          color="#000"
+          borderRadius="10px"
+        >
+          <Editor
+            editorState={editorState}
+            toolbarClassName="rich-toolbar"
+            wrapperClassName="rich-wrapper"
+            editorClassName="rich-editor"
+            onEditorStateChange={handleChange}
+          />
+        </Box>
+      )}
       <AlertModal
         type="leave"
         onClose={onClose}

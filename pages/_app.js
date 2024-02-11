@@ -8,9 +8,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // add long-press functionality for favorites (added library)
-// add authentication
 // add warning on delete
-// fix one to many relationship to mongo database
 
 const queryClient = new QueryClient();
 
