@@ -46,8 +46,8 @@ export const postOne = (url, body) => {
     });
 };
 
-export const updateOne = (url, id, body) => {
-  return fetch(url + id, {
+export const updateOne = (url, body) => {
+  return fetch(url, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

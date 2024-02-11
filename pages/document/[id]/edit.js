@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 import HeaderButton from "@/components/HeaderButton";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 import PageHeader from "@/components/PageHeader";
 import { useGetEditableDoc } from "@/helpers/apiQueries";
 import { useDisclosure } from "@chakra-ui/react";
@@ -19,6 +20,7 @@ import { Box } from "@chakra-ui/react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 const EditPage = () => {
+  const { data: session } = useSession();
   const router = useRouter();
   const { id } = router.query;
   const { updateDoc, isLoading: isEditLoading } = useUpdateDoc();
@@ -32,7 +34,10 @@ const EditPage = () => {
     onNavigate: () => onOpen(),
   });
 
-  const { isLoading, error, data, isFetching } = useGetEditableDoc(id);
+  const { isLoading, error, data, isFetching } = useGetEditableDoc(
+    id,
+    session?.user?.id
+  );
 
   useEffect(() => {
     if (data) {

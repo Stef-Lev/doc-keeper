@@ -30,7 +30,7 @@ export const useUpdateDoc = () => {
   const { mutate: updateDoc, isLoading } = useMutation(
     (variables) => {
       const { id, body } = variables;
-      updateOne("/api/docs/", id, body);
+      updateOne(`/api/docs/${id}`, body);
     },
     {
       onSuccess: async () => {

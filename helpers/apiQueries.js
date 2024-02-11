@@ -39,7 +39,7 @@ export const useGetEditableDoc = (id, userId) => {
   return useQuery({
     queryKey: ["docEdit", id, userId],
     queryFn: () =>
-      getOne(`/api/docs?user=${userId}`, id)
+      getOne(`/api/docs/${id}?user=${userId}`)
         .then((res) => res.data)
         .catch((err) => {
           throw err;
