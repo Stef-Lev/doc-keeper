@@ -1,7 +1,6 @@
 import dynamic from "next/dynamic";
 import HeaderButton from "@/components/HeaderButton";
 import { useRouter } from "next/router";
-import Loader from "@/components/Loader";
 import PageHeader from "@/components/PageHeader";
 import { useGetEditableDoc } from "@/helpers/apiQueries";
 import { useDisclosure } from "@chakra-ui/react";
@@ -9,6 +8,7 @@ import { useState, useEffect } from "react";
 import { useNavigationObserver } from "hooks/useNavigationObserver";
 import AlertModal from "@/components/AlertModal";
 import { useUpdateDoc } from "@/helpers/apiMutations";
+import LoaderOverlay from "@/components/LoaderOverlay";
 import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -48,7 +48,7 @@ const EditPage = () => {
   }
 
   if (isLoading || isFetching || !data || isEditLoading) {
-    return <Loader fullScreen />;
+    return <LoaderOverlay />;
   }
 
   const handleChange = (newEditorState) => {

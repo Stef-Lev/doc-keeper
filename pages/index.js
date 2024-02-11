@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { signOut, useSession } from "next-auth/react";
-import Loader from "@/components/Loader";
 import { Box } from "@chakra-ui/react";
 import DocItem from "@/components/DocItem";
 import SearchBar from "@/components/SearchBar";
 import Fuse from "fuse.js";
 import notify from "@/helpers/notify";
 import { useGetAllDocs } from "@/helpers/apiQueries";
+import LoaderOverlay from "@/components/LoaderOverlay";
 
 const HomePage = () => {
   const [query, setQuery] = useState("");
@@ -22,7 +22,7 @@ const HomePage = () => {
   }
 
   if (isLoading || isFetching) {
-    return <Loader fullScreen />;
+    return <LoaderOverlay />;
   }
 
   const searchOptions = {

@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import Loader from "@/components/Loader";
 import { useSession } from "next-auth/react";
 import { Box } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
@@ -8,6 +7,7 @@ import PageHeader from "@/components/PageHeader";
 import HeaderButton from "@/components/HeaderButton";
 import { useDeleteDoc } from "@/helpers/apiMutations";
 import { useGetDocPreview } from "@/helpers/apiQueries";
+import LoaderOverlay from "@/components/LoaderOverlay";
 import { convertFromRaw, EditorState } from "draft-js";
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -33,7 +33,7 @@ const DocViewPage = () => {
   }
 
   if (isLoading || isFetching || !data) {
-    return <Loader fullScreen />;
+    return <LoaderOverlay />;
   }
 
   return (
