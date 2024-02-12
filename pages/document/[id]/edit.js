@@ -61,14 +61,14 @@ const EditPage = () => {
     setEditorState(newEditorState);
   };
 
-  const handlePatchDocument = async () => {
+  const handlePatchDocument = () => {
     const contentState = editorState.getCurrentContent();
     const raw = convertToRaw(contentState);
     if (!raw.blocks.map((it) => it.type).includes("header-one")) {
       notify("Please add a title to the document (H1)", "error");
     } else {
       setDirty(false);
-      await updateDoc({ id, body: { content: raw } });
+      updateDoc({ id, body: { content: raw } });
     }
   };
 

@@ -89,3 +89,27 @@ export const useRegisterUser = () => {
     isLoading,
   };
 };
+
+export const useAddDocToFav = () => {
+  const queryClient = useQueryClient();
+  const { mutate: addToFavs, isLoading } = useMutation(
+    (variables) => {
+      const { id, body } = variables;
+      updateOne(`/api/docs/${id}`, body);
+    },
+    {
+      onSuccess: async () => {
+        await queryClient.invalidateQueries("allDocs");
+        return;
+      },
+      onError: (error) => {
+        notify("Error: " + error.message, "error");
+      },
+    }
+  );
+
+  return {
+    addToFavs,
+    isLoading,
+  };
+};

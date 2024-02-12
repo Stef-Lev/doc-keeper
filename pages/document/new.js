@@ -32,14 +32,14 @@ const newDocPage = () => {
     onNavigate: () => onOpen(),
   });
 
-  const handleCreateDocument = async () => {
+  const handleCreateDocument = () => {
     const contentState = editorState.getCurrentContent();
     const raw = convertToRaw(contentState);
     if (!raw.blocks.map((it) => it.type).includes("header-one")) {
       notify("Please add a title to the document (H1)", "error");
     } else {
       setDirty(false);
-      await addDoc({ content: raw, createdAt: new Date() });
+      addDoc({ content: raw });
     }
   };
 

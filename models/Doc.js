@@ -13,6 +13,7 @@ const ContentSchema = new Schema(
 const DocSchema = new Schema(
   {
     content: { type: ContentSchema, required: true },
+    isFavourite: { type: Boolean, default: false },
     user: { type: Schema.Types.ObjectId, ref: "User" },
   },
   {
