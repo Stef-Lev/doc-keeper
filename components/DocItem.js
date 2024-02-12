@@ -10,13 +10,6 @@ import { IoHeartOutline, IoHeart } from "react-icons/io5";
 function DocItem({ item }) {
   const { addToFavs } = useAddDocToFav();
   const router = useRouter();
-  const bind = useLongPress(
-    () => {
-      alert("Long pressed!");
-    },
-    { threshold: 1000 }
-  );
-
   const [isFavourite, setIsFavourite] = useState(item.isFavourite);
 
   const toggleFavourite = (e) => {
@@ -28,6 +21,13 @@ function DocItem({ item }) {
     });
     setIsFavourite((prevState) => !prevState);
   };
+
+  const bind = useLongPress(
+    (e) => {
+      toggleFavourite(e);
+    },
+    { threshold: 1000 }
+  );
 
   const onItemClick = (e) => {
     e.preventDefault();
