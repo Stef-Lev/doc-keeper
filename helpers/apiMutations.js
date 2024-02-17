@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { postOne, deleteOne, updateOne } from "./apiServices";
 import { useRouter } from "next/router";
 import notify from "./notify";
@@ -26,7 +26,6 @@ export const useAddDoc = (userId) => {
 
 export const useUpdateDoc = () => {
   const router = useRouter();
-  const queryClient = useQueryClient();
   const { mutate: updateDoc, isLoading } = useMutation(
     (variables) => {
       const { id, body } = variables;
@@ -35,7 +34,6 @@ export const useUpdateDoc = () => {
     {
       onSuccess: async () => {
         notify("Document updated", "success");
-        await queryClient.invalidateQueries("allDocs");
         await router.push("/");
       },
       onError: (error) => {
@@ -86,30 +84,6 @@ export const useRegisterUser = () => {
 
   return {
     registerUser,
-    isLoading,
-  };
-};
-
-export const useAddDocToFav = () => {
-  const queryClient = useQueryClient();
-  const { mutate: addToFavs, isLoading } = useMutation(
-    (variables) => {
-      const { id, body } = variables;
-      updateOne(`/api/docs/${id}`, body);
-    },
-    {
-      onSuccess: async () => {
-        await queryClient.invalidateQueries("allDocs");
-        return;
-      },
-      onError: (error) => {
-        notify("Error: " + error.message, "error");
-      },
-    }
-  );
-
-  return {
-    addToFavs,
     isLoading,
   };
 };

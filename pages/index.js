@@ -49,7 +49,7 @@ const HomePage = () => {
       <SearchBar onChange={handleSearchInputChange} query={query} />
       <Box>
         {searchResults.map((item, idx) => (
-          <DocItem key={idx + 1} item={item} />
+          <DocItem key={idx + 1} item={item} withFav />
         ))}
       </Box>
       <button onClick={() => signOut()}>LOGOUT</button>

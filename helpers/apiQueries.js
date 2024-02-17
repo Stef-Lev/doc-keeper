@@ -4,7 +4,7 @@ import notify from "./notify";
 
 export const useGetAllDocs = (userId) => {
   return useQuery({
-    queryKey: ["allDocs", userId],
+    queryKey: [`allDocs?user=${userId}`],
     queryFn: () =>
       getAll(`/api/docs?user=${userId}`)
         .then((res) => res.data)
@@ -14,13 +14,13 @@ export const useGetAllDocs = (userId) => {
         }),
     enabled: !!userId,
     retry: false,
-    staleTime: 2000,
+    staleTime: Infinity,
   });
 };
 
 export const useGetDocPreview = (id, userId) => {
   const { isLoading, error, data, isFetching } = useQuery({
-    queryKey: ["docView", id, userId],
+    queryKey: [`docView?id=${id}&user=${userId}`],
     queryFn: () =>
       getOne(`/api/docs/${id}?user=${userId}`)
         .then((res) => res.data)
@@ -30,14 +30,14 @@ export const useGetDocPreview = (id, userId) => {
         }),
     enabled: !!id && !!userId,
     retry: false,
-    staleTime: 2000,
+    staleTime: Infinity,
   });
   return { isLoading, error, data, isFetching };
 };
 
 export const useGetEditableDoc = (id, userId) => {
   return useQuery({
-    queryKey: ["docEdit", id, userId],
+    queryKey: [`docEdit?id=${id}&user=${userId}`],
     queryFn: () =>
       getOne(`/api/docs/${id}?user=${userId}`)
         .then((res) => res.data)
@@ -46,6 +46,6 @@ export const useGetEditableDoc = (id, userId) => {
         }),
     enabled: !!id,
     retry: false,
-    staleTime: 2000,
+    staleTime: Infinity,
   });
 };
