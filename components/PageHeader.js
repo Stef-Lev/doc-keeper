@@ -3,7 +3,7 @@ import { FaChevronLeft } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 
-const PageHeader = ({ buttons }) => {
+const PageHeader = ({ buttons, backToPage }) => {
   const router = useRouter();
   const renderButtons = useMemo(() => {
     if (!buttons || buttons.length === 0) {
@@ -20,6 +20,10 @@ const PageHeader = ({ buttons }) => {
     );
   }, [buttons]);
 
+  const goBack = () => {
+    router.push(backToPage);
+  };
+
   return (
     <Box
       display="flex"
@@ -31,7 +35,7 @@ const PageHeader = ({ buttons }) => {
       mt="16px"
       borderRadius="8px"
     >
-      <Box onClick={router.back} cursor="pointer">
+      <Box onClick={goBack} cursor="pointer">
         <FaChevronLeft size="28" />
       </Box>
       {renderButtons}

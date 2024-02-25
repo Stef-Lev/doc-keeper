@@ -82,6 +82,7 @@ const EditPage = () => {
             onClick={() => handlePatchDocument()}
           />,
         ]}
+        backToPage={`/document/${id}`}
       />
       {editorState && (
         <Box

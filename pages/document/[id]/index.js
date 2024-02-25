@@ -37,7 +37,6 @@ const DocViewPage = () => {
   if (isLoading || isFetching || !data) {
     return <LoaderOverlay />;
   }
-  console.log("RENDER");
 
   return (
     <Box>
@@ -54,6 +53,7 @@ const DocViewPage = () => {
             onClick={() => handleDeleteClick()}
           />,
         ]}
+        backToPage={`/`}
       />
       {data.content && (
         <Box

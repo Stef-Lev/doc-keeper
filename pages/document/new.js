@@ -53,6 +53,7 @@ const newDocPage = () => {
             onClick={handleCreateDocument}
           />,
         ]}
+        backToPage="/"
       />
       <Box
         textAlign="center"
