@@ -16,7 +16,7 @@ const Editor = dynamic(
 );
 const DocViewPage = () => {
   const router = useRouter();
-  const { id } = router.query;
+  const { id, favourite } = router.query;
   const { onOpen, onClose, isOpen } = useDisclosure();
   const { data: session } = useSession();
   const { deleteDoc } = useDeleteDoc(session?.user?.id);
@@ -53,7 +53,7 @@ const DocViewPage = () => {
             onClick={() => handleDeleteClick()}
           />,
         ]}
-        backToPage={`/`}
+        backToPage={favourite ? `/favourites` : `/`}
       />
       {data.content && (
         <Box

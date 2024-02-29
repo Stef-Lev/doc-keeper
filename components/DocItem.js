@@ -21,7 +21,10 @@ function DocItem({ item, withFav = false }) {
   };
 
   const onItemClick = () => {
-    router.push(`/document/${item._id}`);
+    const url = withFav
+      ? `/document/${item._id}`
+      : `/document/${item._id}?favourite=true`;
+    router.push(url);
   };
 
   return (
